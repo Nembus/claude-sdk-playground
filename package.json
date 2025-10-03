@@ -1,0 +1,42 @@
+{
+  "name": "claude-sdk-playground",
+  "version": "1.0.0",
+  "description": "Hands-on learning project for the Claude Agent SDK in TypeScript",
+  "type": "module",
+  "scripts": {
+    "01": "tsx src/01-basic-query.ts",
+    "02": "tsx src/02-custom-tools.ts",
+    "03": "tsx src/03-file-operations.ts",
+    "04": "tsx src/04-mcp-server.ts",
+    "05": "tsx src/05-streaming.ts",
+    "06": "tsx src/06-subagents.ts",
+    "dev": "tsx --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "claude",
+    "anthropic",
+    "ai",
+    "agent",
+    "sdk",
+    "tutorial",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.5",
+    "@anthropic-ai/sdk": "^0.65.0",
+    "@modelcontextprotocol/sdk": "^1.19.1",
+    "dotenv": "^16.4.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
