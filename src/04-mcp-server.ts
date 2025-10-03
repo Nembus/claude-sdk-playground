@@ -189,6 +189,7 @@ async function main() {
         mcpServers: {
           'math-operations': mathServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -223,6 +224,7 @@ async function main() {
           'math-operations': mathServer,
           'text-operations': textServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -256,6 +258,7 @@ async function main() {
           'math-operations': mathServer,
           'text-operations': textServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 

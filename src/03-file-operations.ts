@@ -50,6 +50,7 @@ async function main() {
         allowedTools: ['Read'],
         // Set the working directory for file operations
         cwd: process.cwd(),
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -82,6 +83,7 @@ async function main() {
         // Enable Write tool for creating files
         allowedTools: ['Write'],
         cwd: process.cwd(),
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -128,6 +130,7 @@ async function main() {
         // Enable both Read and Edit tools
         allowedTools: ['Read', 'Edit'],
         cwd: process.cwd(),
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -180,6 +183,7 @@ console.log(calculateTotal(prices));
         // Enable multiple tools for a complex workflow
         allowedTools: ['Read', 'Write', 'Edit'],
         cwd: process.cwd(),
+        permissionMode: 'bypassPermissions',
       },
     });
 

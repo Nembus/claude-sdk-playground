@@ -224,6 +224,7 @@ async function main() {
         mcpServers: {
           'subagent-tools': subagentServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -253,6 +254,7 @@ async function main() {
         mcpServers: {
           'subagent-tools': subagentServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -283,6 +285,7 @@ async function main() {
         mcpServers: {
           'subagent-tools': subagentServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -316,6 +319,7 @@ async function main() {
         mcpServers: {
           'subagent-tools': subagentServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 

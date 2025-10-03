@@ -442,11 +442,14 @@ Control how tools request permissions:
 
 ```typescript
 options: {
-  permissionMode: 'auto',  // User confirms each operation (default)
-  permissionMode: 'allow', // Auto-allow all operations (use carefully!)
-  permissionMode: 'deny',  // Block all operations
+  permissionMode: 'default',           // User confirms each operation (default)
+  permissionMode: 'bypassPermissions', // Auto-allow all operations (use carefully!)
+  permissionMode: 'acceptEdits',       // Auto-accept edit operations only
+  permissionMode: 'plan',              // Plan mode only, no execution
 }
 ```
+
+**Note:** All examples in this project use `permissionMode: 'bypassPermissions'` for demo purposes to avoid requiring manual approval for each tool use.
 
 ## 🛡️ Security Best Practices
 

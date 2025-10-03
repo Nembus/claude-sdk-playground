@@ -178,6 +178,8 @@ async function main() {
         mcpServers: {
           'custom-tools': toolsServer,
         },
+        // Auto-approve tool usage for demo purposes
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -210,6 +212,7 @@ async function main() {
         mcpServers: {
           'custom-tools': toolsServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 
@@ -244,6 +247,7 @@ async function main() {
         mcpServers: {
           'custom-tools': toolsServer,
         },
+        permissionMode: 'bypassPermissions',
       },
     });
 

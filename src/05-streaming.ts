@@ -160,6 +160,7 @@ async function main() {
         model: 'claude-sonnet-4-5',
         allowedTools: ['Bash', 'Glob'],
         cwd: process.cwd(),
+        permissionMode: 'bypassPermissions',
       },
     });
 
