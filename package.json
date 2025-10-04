@@ -10,6 +10,7 @@
     "04": "tsx src/04-mcp-server.ts",
     "05": "tsx src/05-streaming.ts",
     "06": "tsx src/06-subagents.ts",
+    "07": "tsx src/07-hooks.ts",
     "dev": "tsx --watch",
     "type-check": "tsc --noEmit"
   },

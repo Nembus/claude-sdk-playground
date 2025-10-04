@@ -12,6 +12,7 @@ This playground covers everything you need to build autonomous AI agents with Cl
 4. **MCP Servers** - Creating reusable Model Context Protocol servers
 5. **Streaming** - Real-time response handling
 6. **Subagents** - Parallel task processing and domain specialists
+7. **Hooks** - Monitoring, controlling, and customizing agent behavior
 
 ## 🚀 Quick Start
 
@@ -76,9 +77,12 @@ npm run 05
 
 # Example 06: Subagents
 npm run 06
+
+# Example 07: Hooks
+npm run 07
 ```
 
-**Recommended**: Run examples in order (01 → 06) for the best learning experience.
+**Recommended**: Run examples in order (01 → 07) for the best learning experience.
 
 ## 📖 Tutorial Guide
 
@@ -344,6 +348,69 @@ Synthesizes Insights
 - Multi-specialist consultation systems
 - Distributed task managers
 - Complex workflow orchestrators
+
+### Example 07: Hooks
+
+**File:** `src/07-hooks.ts`
+
+Monitor, control, and customize agent behavior with hooks:
+- Understanding the hooks system
+- PreToolUse and PostToolUse hooks
+- Session lifecycle management
+- Approval workflows
+- Performance monitoring
+- Audit logging
+
+**Key Concepts:**
+```typescript
+// Hook that logs all tool usage
+async function loggingHook(input: HookInput): Promise<HookJSONOutput> {
+  if (input.hook_event_name === 'PreToolUse') {
+    console.log(`Tool: ${input.tool_name}`);
+    console.log(`Input: ${JSON.stringify(input.tool_input)}`);
+  }
+  return { continue: true };
+}
+
+// Use hooks in query
+const result = query({
+  prompt: 'Calculate 10 * 5',
+  options: {
+    hooks: {
+      PreToolUse: [{ hooks: [loggingHook] }],
+      PostToolUse: [{ hooks: [loggingHook] }],
+    },
+  },
+});
+```
+
+**Available Hook Events:**
+- **PreToolUse** - Validate/approve/block before tool execution
+- **PostToolUse** - Log/audit after tool execution
+- **SessionStart** - Initialize when session begins
+- **SessionEnd** - Cleanup and reporting when session ends
+- **Notification** - Handle SDK notifications
+- **UserPromptSubmit** - Process user input
+- **Stop** - Handle execution stops
+- **SubagentStop** - Manage subagent lifecycle
+- **PreCompact** - Handle conversation compaction
+
+**Hook Outputs:**
+```typescript
+{
+  continue: false,              // Stop execution
+  decision: 'block',            // Block tool use
+  systemMessage: 'Blocked!',    // Add context message
+  suppressOutput: true,         // Hide output
+}
+```
+
+**What You'll Build:**
+- Audit logging systems
+- Approval workflows for sensitive operations
+- Performance monitoring dashboards
+- Custom authorization logic
+- Session analytics and reporting
 
 ---
 
