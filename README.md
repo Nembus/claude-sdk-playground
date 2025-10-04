@@ -101,7 +101,6 @@ const result = await query({
   prompt: 'What are the three laws of robotics?',
   options: {
     model: 'claude-sonnet-4-5',
-    maxTokens: 1024,
   },
 });
 
@@ -358,7 +357,7 @@ import { query } from '@anthropic-ai/claude-agent-sdk';
 async function askClaude(question: string) {
   const result = await query({
     prompt: question,
-    options: { model: 'claude-sonnet-4-5', maxTokens: 1024 },
+    options: { model: 'claude-sonnet-4-5' },
   });
 
   for await (const message of result) {
@@ -412,7 +411,6 @@ const result = await query({
   prompt: 'Review this codebase and provide expert analysis',
   options: {
     tools: specialists,
-    maxTokens: 8192,
   },
 });
 ```
@@ -481,7 +479,7 @@ options: {
 ```typescript
 // Only enable tools you need
 options: {
-  allowedTools: ['Read', 'Grep'],  // Read-only access
+  allowedTools: ['Read', 'Grep']  // Read-only access
 }
 ```
 
