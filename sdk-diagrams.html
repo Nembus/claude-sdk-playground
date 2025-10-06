@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude SDK Structure Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #111827;
+        }
+        
+        .tab-wrapper input[type="radio"] {
+            display: none;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab-buttons label {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: #e5e7eb;
+            color: #374151;
+            transition: all 0.2s;
+        }
+        
+        .tab-buttons label:hover {
+            background-color: #d1d5db;
+        }
+        
+        #tab-client:checked ~ .tab-buttons label[for="tab-client"],
+        #tab-agent:checked ~ .tab-buttons label[for="tab-agent"] {
+            background-color: #2563eb;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        #tab-client:checked ~ .tab-contents #content-client,
+        #tab-agent:checked ~ .tab-contents #content-agent {
+            display: block;
+        }
+        
+        .info-box {
+            padding: 1rem;
+            background-color: #dbeafe;
+            border-left: 4px solid #2563eb;
+            border-radius: 0.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-box strong {
+            color: #1e40af;
+        }
+        
+        .info-box code {
+            background-color: #e5e7eb;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d1d5db;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1rem;
+        }
+        
+        .card {
+            border: 2px solid;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-blue {
+            background-color: #eff6ff;
+            border-color: #93c5fd;
+        }
+        
+        .card-green {
+            background-color: #f0fdf4;
+            border-color: #86efac;
+        }
+        
+        .card-purple {
+            background-color: #faf5ff;
+            border-color: #d8b4fe;
+        }
+        
+        .card-orange {
+            background-color: #fff7ed;
+            border-color: #fdba74;
+        }
+        
+        .card-gray {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-type {
+            font-size: 0.875rem;
+            font-style: italic;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+        }
+        
+        .properties {
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+        }
+        
+        .properties div {
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+        
+        .card-nested {
+            margin-top: 0.75rem;
+        }
+        
+        .legend {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+        }
+        
+        .legend h3 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .legend-color {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.25rem;
+            border: 2px solid;
+        }
+        
+        .option-label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Claude SDK Structure Reference</h1>
+        
+        <div class="tab-wrapper">
+            <input type="radio" name="sdk-tabs" id="tab-client" checked>
+            <input type="radio" name="sdk-tabs" id="tab-agent">
+            
+            <div class="tab-buttons">
+                <label for="tab-client">Client SDK (Streaming API)</label>
+                <label for="tab-agent">Agent SDK (Query API)</label>
+            </div>
+            
+            <div class="tab-contents">
+                <div id="content-client" class="tab-content">
+                    <div class="info-box">
+                        <p><strong>MessageStreamEvent</strong> is a union type containing 8 different event types emitted during streaming.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h2 class="section-title">Stream Events</h2>
+                        
+                        <div class="grid">
+                            <div class="card card-green">
+                                <div class="card-title">message_start</div>
+                                <div class="properties">
+                                    <div>type: "message_start"</div>
+                                    <div>message: Message</div>
+                                </div>
+                                <div class="card-nested">
+                                    <div class="card card-gray">
+                                        <div class="card-title">Message</div>
+                                        <div class="properties">
+                                            <div>id: string</div>
+                                            <div>model: string</div>
+                                            <div>role: "assistant"</div>
+                                            <div>content: [] (empty)</div>
+                                            <div>stop_reason: null</div>
+                                            <div>stop_sequence: null</div>
+                                            <div>usage: Usage</div>
+                                        </div>
+                                        <div class="card-nested">
+                                            <div class="card card-gray">
+                                                <div class="card-title">Usage</div>
+                                                <div class="properties">
+                                                    <div>input_tokens: number</div>
+                                                    <div>output_tokens: number</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-green">
+                                <div class="card-title">content_block_start</div>
+                                <div class="properties">
+                                    <div>type: "content_block_start"</div>
+                                    <div>index: number</div>
+                                    <div>content_block: ContentBlock</div>
+                                </div>
+                                <div class="card-nested">
+                                    <div class="card card-orange">
+                                        <div class="card-title">ContentBlock (union)</div>
+                                        <div class="card-nested">
+                                            <div class="card card-gray">
+                                                <div class="card-title">TextBlock</div>
+                                                <div class="properties">
+                                                    <div>type: "text"</div>
+                                                    <div>text: "" (empty)</div>
+                                                </div>
+                                            </div>
+                                            <div class="card card-gray">
+                                                <div class="card-title">ToolUseBlock</div>
+                                                <div class="properties">
+                                                    <div>type: "tool_use"</div>
+                                                    <div>id: string</div>
+                                                    <div>name: string</div>
+                                                    <div>input: {}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-green">
+                                <div class="card-title">content_block_delta</div>
+                                <div class="properties">
+                                    <div>type: "content_block_delta"</div>
+                                    <div>index: number</div>
+                                    <div>delta: Delta</div>
+                                </div>
+                                <div class="card-nested">
+                                    <div class="card card-orange">
+                                        <div class="card-title">Delta (union)</div>
+                                        <div class="card-nested">
+                                            <div class="card card-gray">
+                                                <div class="card-title">TextDelta</div>
+                                                <div class="properties">
+                                                    <div>type: "text_delta"</div>
+                                                    <div>text: string</div>
+                                                </div>
+                                            </div>
+                                            <div class="card card-gray">
+                                                <div class="card-title">InputJsonDelta</div>
+                                                <div class="properties">
+                                                    <div>type: "input_json_delta"</div>
+                                                    <div>partial_json: string</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-green">
+                                <div class="card-title">content_block_stop</div>
+                                <div class="properties">
+                                    <div>type: "content_block_stop"</div>
+                                    <div>index: number</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-green">
+                                <div class="card-title">message_delta</div>
+                                <div class="properties">
+                                    <div>type: "message_delta"</div>
+                                    <div>delta: MessageDelta</div>
+                                    <div>usage: Usage</div>
+                                </div>
+                                <div class="card-nested">
+                                    <div class="card card-gray">
+                                        <div class="card-title">MessageDelta</div>
+                                        <div class="properties">
+                                            <div>stop_reason: "end_turn" | "max_tokens" | "stop_sequence" | "tool_use"</div>
+                                            <div>stop_sequence: string | null</div>
+                                        </div>
+                                    </div>
+                                    <div class="card card-gray">
+                                        <div class="card-title">Usage</div>
+                                        <div class="properties">
+                                            <div>output_tokens: number</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-green">
+                                <div class="card-title">message_stop</div>
+                                <div class="properties">
+                                    <div>type: "message_stop"</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-green">
+                                <div class="card-title">ping</div>
+                                <div class="properties">
+                                    <div>type: "ping"</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-green">
+                                <div class="card-title">error</div>
+                                <div class="properties">
+                                    <div>type: "error"</div>
+                                    <div>error: Error</div>
+                                </div>
+                                <div class="card-nested">
+                                    <div class="card card-gray">
+                                        <div class="card-title">Error</div>
+                                        <div class="properties">
+                                            <div>type: string</div>
+                                            <div>message: string</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="content-agent" class="tab-content">
+                    <div class="info-box">
+                        <p><strong>Message</strong> is returned by the <code>query()</code> function.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h2 class="section-title">Message Object</h2>
+                        
+                        <div class="card card-blue">
+                            <div class="card-title">Message</div>
+                            <div class="properties">
+                                <div>id: string</div>
+                                <div>type: "message"</div>
+                                <div>role: "assistant"</div>
+                                <div>model: string</div>
+                                <div>stop_reason: string | null</div>
+                                <div>stop_sequence: string | null</div>
+                                <div>content: ContentBlock[]</div>
+                                <div>usage: Usage</div>
+                            </div>
+                            <div class="card-nested">
+                                <div class="card card-gray">
+                                    <div class="card-title">Usage</div>
+                                    <div class="properties">
+                                        <div>input_tokens: number</div>
+                                        <div>output_tokens: number</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2 class="section-title">Content Block Types</h2>
+                        
+                        <div class="grid">
+                            <div class="card card-purple">
+                                <div class="card-title">TextBlock</div>
+                                <div class="properties">
+                                    <div>type: "text"</div>
+                                    <div>text: string</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-purple">
+                                <div class="card-title">ToolUseBlock</div>
+                                <div class="properties">
+                                    <div>type: "tool_use"</div>
+                                    <div>id: string</div>
+                                    <div>name: string</div>
+                                    <div>input: object</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card card-purple">
+                                <div class="card-title">ToolResultBlock</div>
+                                <div class="properties">
+                                    <div>type: "tool_result"</div>
+                                    <div>tool_use_id: string</div>
+                                    <div>is_error?: boolean</div>
+                                    <div>content: string | ContentBlock[]</div>
+                                </div>
+                                <div class="card-nested">
+                                    <div class="card card-orange">
+                                        <div class="card-title">Content (can be string or array)</div>
+                                        
+                                        <div class="option-label">Option 1: Plain string</div>
+                                        <div class="properties">
+                                            <div>content: "result text"</div>
+                                        </div>
+                                        
+                                        <div class="option-label" style="margin-top: 1rem;">Option 2: ContentBlock array</div>
+                                        <div class="card-nested">
+                                            <div class="card card-gray">
+                                                <div class="card-title">TextBlock</div>
+                                                <div class="properties">
+                                                    <div>type: "text"</div>
+                                                    <div>text: string</div>
+                                                </div>
+                                            </div>
+                                            <div class="card card-gray">
+                                                <div class="card-title">ImageBlock</div>
+                                                <div class="properties">
+                                                    <div>type: "image"</div>
+                                                    <div>source: ImageSource</div>
+                                                </div>
+                                                <div class="card-nested">
+                                                    <div class="card card-gray">
+                                                        <div class="card-title">ImageSource</div>
+                                                        <div class="properties">
+                                                            <div>type: string</div>
+                                                            <div>media_type: string</div>
+                                                            <div>data: string (base64)</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="legend">
+            <h3>Color Legend</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #dbeafe; border-color: #93c5fd;"></div>
+                    <span>Root Type</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #dcfce7; border-color: #86efac;"></div>
+                    <span>Event</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #f3e8ff; border-color: #d8b4fe;"></div>
+                    <span>Content Block</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #fed7aa; border-color: #fdba74;"></div>
+                    <span>Union Type</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #f3f4f6; border-color: #d1d5db;"></div>
+                    <span>Nested Object</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
