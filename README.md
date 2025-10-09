@@ -13,6 +13,7 @@ This playground covers everything you need to build autonomous AI agents with Cl
 5. **Streaming** - Real-time response handling
 6. **Subagents** - Parallel task processing and domain specialists
 7. **Hooks** - Monitoring, controlling, and customizing agent behavior
+8. **Multi-Agent Orchestration** - Coordinated delegation with progress tracking
 
 ## 🚀 Quick Start
 
@@ -80,9 +81,12 @@ npm run 06
 
 # Example 07: Hooks
 npm run 07
+
+# Example 08: Multi-Agent Orchestration
+npm run 08
 ```
 
-**Recommended**: Run examples in order (01 → 07) for the best learning experience.
+**Recommended**: Run examples in order (01 → 08) for the best learning experience.
 
 ## 📖 Tutorial Guide
 
@@ -411,6 +415,39 @@ const result = query({
 - Performance monitoring dashboards
 - Custom authorization logic
 - Session analytics and reporting
+
+---
+
+### Example 08: Multi-Agent Orchestration
+
+**File:** `src/08-multi-agent-orchestration.ts`
+
+Coordinate specialized subagents in parallel, stream their heartbeats, and aggregate a single cohesive delivery packet.
+
+**Key Concepts:**
+```typescript
+const result = query({
+  prompt: orchestratorPrompt,
+  options: {
+    allowedTools: ['Task', 'Read', 'Write', 'Edit', 'Bash'],
+    agents: {
+      researcher: { /* focused brief */ },
+      coder: { /* implementation planner */ },
+      reviewer: { /* risk analyst */ },
+    },
+  },
+});
+
+for await (const message of result) {
+  // Emit launch notices, heartbeat updates (⏳), and final synthesis
+}
+```
+
+**What You'll Build:**
+- An orchestration loop that dispatches Task-based subagents concurrently
+- Periodic progress pulses so long-running work never appears stalled
+- A unified report blending research, build plans, and QA guidance
+- A template for quantifying time saved by parallel execution
 
 ---
 
